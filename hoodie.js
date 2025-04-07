@@ -1,12 +1,42 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Mobile Menu Toggle
-    const hamburger = document.querySelector('.hamburger');
-    const navbar = document.querySelector('.navbar');
-    
-    hamburger.addEventListener('click', function() {
+// Mobile Menu Toggle
+const hamburger = document.querySelector('.hamburger');
+const navbar = document.querySelector('.navbar');
+const header = document.querySelector('.header');
+
+if (hamburger && navbar) {
+    hamburger.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
         this.classList.toggle('active');
         navbar.classList.toggle('active');
+        document.body.classList.toggle('menu-open');
+        
+        // Close other menus when hamburger is clicked
+        if (cartSidebar) cartSidebar.classList.remove('active');
+        if (wishlistSidebar) wishlistSidebar.classList.remove('active');
     });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (navbar.classList.contains('active') && 
+            !navbar.contains(e.target) && 
+            e.target !== hamburger) {
+            hamburger.classList.remove('active');
+            navbar.classList.remove('active');
+            document.body.classList.remove('menu-open');
+        }
+    });
+
+    // Close menu when clicking on nav links
+    const navLinks = document.querySelectorAll('.navbar a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navbar.classList.remove('active');
+            document.body.classList.remove('menu-open');
+        });
+    });
+}
     
     // Change header style on scroll
     const header = document.querySelector('.header');
