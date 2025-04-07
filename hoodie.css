@@ -228,10 +228,130 @@ ul {
   font-weight: 600;
 }
 
+/* ===== Hamburger Menu Styles ===== */
 .hamburger {
-  font-size: 1.5rem;
+  display: none; /* Hidden by default on desktop */
   cursor: pointer;
-  display: none;
+  background: transparent;
+  border: none;
+  padding: 10px;
+  z-index: 1001;
+  position: relative;
+  width: 30px;
+  height: 24px;
+}
+
+.hamburger span {
+  display: block;
+  position: absolute;
+  height: 3px;
+  width: 100%;
+  background: var(--dark-color);
+  border-radius: 3px;
+  opacity: 1;
+  left: 0;
+  transform: rotate(0deg);
+  transition: var(--transition);
+}
+
+.hamburger span:nth-child(1) {
+  top: 0;
+}
+
+.hamburger span:nth-child(2),
+.hamburger span:nth-child(3) {
+  top: 10px;
+}
+
+.hamburger span:nth-child(4) {
+  top: 20px;
+}
+
+.hamburger.active span:nth-child(1) {
+  top: 10px;
+  width: 0%;
+  left: 50%;
+}
+
+.hamburger.active span:nth-child(2) {
+  transform: rotate(45deg);
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg);
+}
+
+.hamburger.active span:nth-child(4) {
+  top: 10px;
+  width: 0%;
+  left: 50%;
+}
+
+/* Navbar styles for mobile */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block; /* Show hamburger on mobile */
+  }
+
+  .navbar {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-150%);
+    opacity: 0;
+    transition: all 0.5s ease;
+    z-index: 1000;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+  }
+
+  .navbar.active {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .navbar ul {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .navbar ul li a {
+    padding: 10px 0;
+    display: block;
+  }
+
+  .navbar ul li a::after {
+    display: none;
+  }
+
+  /* Ensure header stays on top */
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  /* Adjust hero section to account for fixed header */
+  .hero {
+    padding-top: 120px;
+  }
+}
+
+/* Make sure other overlays don't conflict */
+.cart-sidebar.active,
+.wishlist-sidebar.active,
+.modal.active {
+  z-index: 2000;
+}
+
+/* When mobile menu is open, prevent body scroll */
+body.menu-open {
+  overflow: hidden;
 }
 
 /* Hero Section */
